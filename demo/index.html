@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mushee RightsLayer — Live Demo</title>
+    <meta name="description" content="Interactive live demo for Mushee RightsLayer." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" href="../assets/logo.png" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body class="page-demo">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="noise"></div>
+
+    <div class="demo-layout" data-demo-root>
+      <aside class="demo-sidebar">
+        <a class="brand-lockup brand-link" href="../experience/">
+          <img src="../assets/logo.png" alt="Mushee logo" class="brand-mark" />
+          <div>
+            <span class="brand-name">Mushee</span>
+            <span class="brand-sub">RightsLayer</span>
+          </div>
+        </a>
+
+        <div class="sidebar-group">
+          <span class="sidebar-label">Control views</span>
+          <button class="nav-pill active">Overview</button>
+          <button class="nav-pill">Vaults</button>
+          <button class="nav-pill">Policy Studio</button>
+          <button class="nav-pill">Audit Feed</button>
+          <button class="nav-pill">Subject Requests</button>
+        </div>
+
+        <div class="sidebar-group">
+          <span class="sidebar-label">Dataset vaults</span>
+          <div class="vault-list" id="vaultList"></div>
+        </div>
+
+        <div class="sidebar-foot">
+          <a class="button secondary full" href="../experience/">Back to landing</a>
+        </div>
+      </aside>
+
+      <main class="demo-main">
+        <header class="demo-topbar">
+          <div>
+            <p class="topbar-kicker">Live control room</p>
+            <h1 id="datasetTitle">European Claims Pack</h1>
+          </div>
+          <div class="topbar-actions">
+            <span class="status-chip live">Live simulation</span>
+            <button class="button tertiary" id="randomizeAction">Simulate workflow</button>
+          </div>
+        </header>
+
+        <section class="demo-grid">
+          <article class="demo-panel dataset-panel">
+            <div class="panel-header-row">
+              <div>
+                <span class="section-kicker">Dataset overview</span>
+                <h2>Vault profile</h2>
+              </div>
+              <span class="status-chip" id="riskBadge">High sensitivity</span>
+            </div>
+            <div class="dataset-meta" id="datasetMeta"></div>
+            <div class="health-bars">
+              <div>
+                <span>Encryption integrity</span>
+                <div class="bar-track"><i id="encBar"></i></div>
+              </div>
+              <div>
+                <span>Receipt fidelity</span>
+                <div class="bar-track"><i id="receiptBar"></i></div>
+              </div>
+              <div>
+                <span>Access hygiene</span>
+                <div class="bar-track"><i id="hygieneBar"></i></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-panel policy-panel">
+            <div class="panel-header-row">
+              <div>
+                <span class="section-kicker">Policy studio</span>
+                <h2>Rights controls</h2>
+              </div>
+              <span class="micro-tag" id="receiptMode">Receipt mode: signed</span>
+            </div>
+
+            <div class="control-grid">
+              <label class="toggle-row">
+                <span>Access grant</span>
+                <input type="checkbox" id="grantToggle" checked />
+              </label>
+              <label class="toggle-row">
+                <span>Legal hold</span>
+                <input type="checkbox" id="holdToggle" />
+              </label>
+              <label class="toggle-row">
+                <span>Subject export open</span>
+                <input type="checkbox" id="exportToggle" checked />
+              </label>
+              <label class="toggle-row">
+                <span>Cryptographic erase request</span>
+                <input type="checkbox" id="eraseToggle" />
+              </label>
+            </div>
+
+            <div class="slider-shell">
+              <label for="retentionSlider">Retention window <b id="retentionValue">18 months</b></label>
+              <input type="range" id="retentionSlider" min="3" max="36" step="3" value="18" />
+            </div>
+
+            <div class="action-row">
+              <button class="button primary small" data-action="grant">Grant access</button>
+              <button class="button secondary small" data-action="revoke">Revoke access</button>
+              <button class="button secondary small" data-action="hold">Place legal hold</button>
+              <button class="button secondary small" data-action="export">Generate export</button>
+              <button class="button danger small" data-action="erase">Shred key path</button>
+            </div>
+          </article>
+
+          <article class="demo-panel receipt-panel">
+            <div class="panel-header-row">
+              <div>
+                <span class="section-kicker">Latest receipt</span>
+                <h2>Verifiable action trail</h2>
+              </div>
+            </div>
+            <div class="receipt-card">
+              <div class="receipt-line"><span>Receipt ID</span><b id="receiptId">RL-2A14-GRANT</b></div>
+              <div class="receipt-line"><span>Dataset</span><b id="receiptDataset">European Claims Pack</b></div>
+              <div class="receipt-line"><span>Action</span><b id="receiptAction">Grant access</b></div>
+              <div class="receipt-line"><span>Scope</span><b id="receiptScope">Role scoped / Europe</b></div>
+              <div class="receipt-line"><span>Retention</span><b id="receiptRetention">18 months</b></div>
+              <div class="receipt-line"><span>Signed at</span><b id="receiptTime">—</b></div>
+            </div>
+          </article>
+
+          <article class="demo-panel activity-panel">
+            <div class="panel-header-row">
+              <div>
+                <span class="section-kicker">System feed</span>
+                <h2>Operational timeline</h2>
+              </div>
+            </div>
+            <div class="activity-feed" id="activityFeed"></div>
+          </article>
+
+          <article class="demo-panel request-panel panel-span-2">
+            <div class="panel-header-row">
+              <div>
+                <span class="section-kicker">Request console</span>
+                <h2>Live subject and operator flows</h2>
+              </div>
+            </div>
+            <div class="request-grid">
+              <article class="request-card">
+                <span class="request-label">Subject request</span>
+                <h3>Export personal record bundle</h3>
+                <p>Build a controlled export, watermark it, and generate a release receipt.</p>
+              </article>
+              <article class="request-card">
+                <span class="request-label">Operator action</span>
+                <h3>Freeze evidence under legal hold</h3>
+                <p>Pin policy state and preserve the chain of custody without moving the data.</p>
+              </article>
+              <article class="request-card">
+                <span class="request-label">Security action</span>
+                <h3>Revoke access, preserve evidence</h3>
+                <p>Close exposure instantly while keeping an immutable operational trail.</p>
+              </article>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/app.js"></script>
+  </body>
+</html>
